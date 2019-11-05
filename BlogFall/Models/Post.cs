@@ -17,6 +17,7 @@ namespace BlogFall.Models
         [Display(Name = "Yazar")]
         public string AuthorId { get; set; }
 
+        [Required]
         [Display(Name = "Kategori")]
         public int CategoryId { get; set; }
 
