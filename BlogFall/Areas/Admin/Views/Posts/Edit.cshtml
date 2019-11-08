@@ -1,11 +1,14 @@
 ﻿@model PostEditViewModel
 
 @{
-    ViewBag.Title = "Edit";
-    ViewBag.HeaderTitle = "Yazıyı düzenle";
+
+    var isNew = Model.Id == 0;
+
+    ViewBag.Title = isNew ? "Yeni Yazı" : "Yazıyı Düzenle";
+    ViewBag.HeaderTitle = isNew ? "Yeni Yazı" : "Yazıyı Düzenle";
 }
 
-@using (Html.BeginForm("Edit", "Posts", FormMethod.Post))
+@using (Html.BeginForm(isNew ? "New" : "Edit", "Posts", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => x.Id)
@@ -34,7 +37,7 @@
             </div>
             <div class="form-group">
                 @Html.TextAreaFor(x => x.Content,
-               new { @class = "form-control", placeholder = "Bir şeyler yazınız", style = "height:300px" })
+               new { @class = "form-control" })
                 @Html.ValidationMessageFor(x => x.Content, null,
                new { @class = "text-danger"})
             </div>
@@ -53,7 +56,7 @@
                 <button type="submit" class="btn btn-primary"><i class="far fa-save"></i> Kaydet</button>
             </div>
             <a href="@Url.Action("Index", "Posts")" class="btn btn-default">
-                <i class="fas fa-times"></i>İptal
+                <i class="fas fa-times"></i>Vazgeç
             </a>
         </div>
         <!-- /.card-footer -->
@@ -65,7 +68,7 @@
     <script>
         $(function () {
             //Add text editor
-            $('#Content').summernote({ lang: "tr-TR" })
+            $('#Content').summernote({ lang: "tr-TR", height: 250, placeholder: "Bir şeyler yazınız..." });
         })
     </script>
 }

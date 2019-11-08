@@ -1,5 +1,6 @@
 ﻿using BlogFall.Areas.Admin.ViewModels;
 using BlogFall.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -14,7 +15,10 @@ namespace BlogFall.Areas.Admin.Controllers
         // GET: Admin/Posts
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+            return View(db
+                .Posts.
+                OrderByDescending(x => x.CreationTime)
+                .ToList());
         }
 
         [HttpPost]
@@ -31,6 +35,8 @@ namespace BlogFall.Areas.Admin.Controllers
             db.SaveChanges();
 
             return Json(new { success = true });
+
+
         }
 
         public ActionResult Edit(int id)
@@ -46,7 +52,6 @@ namespace BlogFall.Areas.Admin.Controllers
             }).FirstOrDefault(x => x.Id == id);
 
             return View(vm);
-
         }
 
         [HttpPost]
@@ -65,9 +70,40 @@ namespace BlogFall.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             ViewBag.CategoryId = new SelectList(db.Categories.ToList(), "Id", "CategoryName");
             return View();
+        }
+
+        public ActionResult New()
+        {
+            ViewBag.CategoryId = new SelectList(db.Categories.ToList(), "Id", "CategoryName");
+            return View("Edit", new PostEditViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult New(PostEditViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Post post = new Post
+                {
+                    Title = model.Title,
+                    Content = model.Content,
+                    CategoryId = model.CategoryId,
+                    AuthorId = User.Identity.GetUserId(),
+                    CreationTime = DateTime.Now,
+                };
+
+                db.Posts.Add(post);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.CategoryId = new SelectList(db.Categories.ToList(), "Id", "CategoryName");
+            return View("Edit", new PostEditViewModel());
         }
     }
 }
