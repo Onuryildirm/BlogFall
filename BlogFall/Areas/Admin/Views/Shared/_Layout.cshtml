@@ -22,6 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/Areas/Admin/dist/css/adminlte.min.css">
     <!-- summernote-->
     <link rel="stylesheet" href="~/Areas/Admin/plugins/summernote/summernote-bs4.css" />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="~/Areas/Admin/plugins/toastr/toastr.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -43,7 +45,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- SEARCH FORM -->
             <form class="form-inline ml-3">
                 <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Ara" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
                             <i class="fas fa-search"></i>
@@ -181,19 +183,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview menu-open">
+                        <li class="nav-item has-treeview menu-close">
                             <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <i class="nav-icon fas fa-stream"></i>
                                 <p>
-                                    Yönetim
+                                    Yazılar
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index","Posts")" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Yazılar</p>
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <p>Yazıları Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("New","Posts")" class="nav-link">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <p>Yeni Yazı</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview menu-close">
+                            <a href="#" class="nav-link active">
+                                <i class="nav-icon fas fa-stream"></i>
+                                <p>
+                                    Kategoriler
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Categories")" class="nav-link">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <p>Kategorileri Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("New","Categories")" class="nav-link">
+                                        <i class="fas fa-pencil-alt"></i>
+                                        <p>Yeni Kategori</p>
                                     </a>
                                 </li>
                             </ul>
@@ -232,11 +263,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                                 <li class="breadcrumb-item">
                                     <a href="@Url.Action("Index", Html.ControllerName())">
-                                        @Html.ControllerName()
+                                        @Html.BreadcrumbControllerName()
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    @Html.ActionName()
+                                    @Html.BreadcrumbActionName()
                                 </li>
                             </ol>
                         </div><!-- /.col -->
@@ -286,6 +317,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Summernote -->
     <script src="~/Areas/Admin/plugins/summernote/summernote-bs4.min.js"></script>
     <script src="~/Areas/Admin/plugins/summernote/lang/summernote-tr-TR.js"></script>
+    <!--Toastr-->
+    <script src="~/Areas/Admin/plugins/toastr/toastr.min.js"></script>
     @RenderSection("scripts", false)
 </body>
 </html>
