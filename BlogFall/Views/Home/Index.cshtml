@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Ana Sayfa";
 }
+
 <h3 class="pb-4 mb-4 font-italic border-bottom">
-    </i>
     @ViewBag.SubTitle
 </h3>
 
@@ -11,40 +11,53 @@
 {
     <div class="blog-post">
         <h2 class="blog-post-title">
-            <a href="@Url.Action("ShowPost","Home", new { id= item.Id })"
+            <a href="@Url.Action("ShowPost", "Home", new { id = item.Id})"
                class="text-reset text-decoration-none">
-                
                 @item.Title
             </a>
         </h2>
-        <p class="blog-post-meta">@item.CreationTime <a href="#">@item.Author.UserName</a></p>
+
+        <p class="blog-post-meta">
+            @item.CreationTime
+            <a href="#">@item.Author.UserName</a>
+
+        </p>
 
         @Html.ShowPostIntro(item.Content)
 
-        <p class="text-right">
-            <a href="@Url.Action("ShowPost","Home", new { id= item.Id })">
+        <div class="d-flex small blog-post-meta-footer">
+            <a href="@Url.Action("ShowPost", "Home", new { id = item.Id})#comments" class="d-inline-block">
+                <i class="far fa-comments mr-1"></i>
+                @item.Comments.Count Yorum
+            </a>
+
+            <a href="@Url.Action("ShowPost", "Home", new { id = item.Id} )" class="ml-auto d-inline-block">
                 Devamını oku...
             </a>
-        </p>
+
+        </div>
+
     </div><!-- /.blog-post -->
 }
+
 
 
 <nav class="blog-pagination">
     @if (ViewBag.page < ViewBag.pageCount)
     {
         <a class="btn btn-outline-primary" href="@Url.Action("Index","Home",
-                                            new { cid = ViewBag.cid,
-                                            page = ViewBag.nextPage
+                                            new {
+                                                cid = ViewBag.cid,
+                                                page = ViewBag.nextPage
                                             })">
 
             &laquo; Daha Eski
         </a>
     }
+
     else
     {
         <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">
-
             &laquo; Daha Eski
         </a>
     }
@@ -53,10 +66,11 @@
     @if (ViewBag.page > 1)
     {
         <a class="btn btn-outline-primary " href="@Url.Action("Index","Home",new
-                                                       { cid = ViewBag.cid,
-                                                           page = ViewBag.prevPage
+                                             {
+                                                 cid = ViewBag.cid,
+                                                 page = ViewBag.prevPage
 
-                                                       })">
+                                             })">
             Daha Yeni &raquo;
         </a>
     }

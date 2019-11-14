@@ -18,6 +18,15 @@ namespace BlogFall.Migrations
 
         protected override void Seed(BlogFall.Models.ApplicationDbContext context)
         {
+
+            //tüm kullanýcýlarý aktif yapar.
+            //foreach (var item in context.Users)
+            //{
+            //    item.IsEnabled = true;
+            //}
+
+            //return;
+
             #region Admin Rolünü ve Kullanýcýsýný Oluþtur
 
             if (!context.Roles.Any(r => r.Name == "Admin"))

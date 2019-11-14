@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>BlogFall Yönetim Paneli | @ViewBag.Title</title>
+    <title>XLarge Yönetim Paneli | @ViewBag.Title</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/Areas/Admin/plugins/fontawesome-free/css/all.min.css">
@@ -20,6 +20,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/Areas/Admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Areas/Admin/dist/css/adminlte.min.css">
+    <!-- bootstrap-switch-->
+    <link href="~/Areas/Admin/plugins/bootstrap-switch/css/bootstrap4/bootstrap-switch.min.css" rel="stylesheet" />
     <!-- summernote-->
     <link rel="stylesheet" href="~/Areas/Admin/plugins/summernote/summernote-bs4.css" />
     <!-- Toastr -->
@@ -166,7 +168,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <img src="~/Areas/Admin/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">@User.Identity.Name</a>
+                        <a href="@Url.Action("Index","Manage", new { area =""})" class="d-block">@User.Identity.Name</a>
                     </div>
                 </div>
 
@@ -184,30 +186,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-close">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon fas fa-stream"></i>
-                                <p>
-                                    Yazılar
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Index","Posts")" class="nav-link">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                        <p>Yazıları Listele</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("New","Posts")" class="nav-link">
-                                        <i class="fas fa-pencil-alt"></i>
-                                        <p>Yeni Yazı</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item has-treeview menu-close">
-                            <a href="#" class="nav-link active">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-stream"></i>
                                 <p>
                                     Kategoriler
@@ -223,21 +202,62 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                                 <li class="nav-item">
                                     <a href="@Url.Action("New","Categories")" class="nav-link">
-                                        <i class="fas fa-pencil-alt"></i>
+                                        <i class="fas fa-plus"></i>
                                         <p>Yeni Kategori</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item has-treeview menu-close">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
+                                <i class="nav-icon fas fa-stream"></i>
                                 <p>
-                                    Simple Link
-                                    <span class="right badge badge-danger">New</span>
+                                    Yazılar
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Posts")" class="nav-link">
+                                        <i class="fas fa-ellipsis-h"></i>
+                                        <p>Yazıları Listele</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="@Url.Action("New","Posts")" class="nav-link">
+                                        <i class="fas fa-plus"></i>
+                                        <p>Yeni Yazı</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
+
+                        <li class="nav-item has-treeview menu-close">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-stream"></i>
+                                <p>
+                                    Yorumlar
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="@Url.Action("Index","Comments")" class="nav-link">
+                                        <i class="fas fa-comments"></i>
+                                        <p>Yorumları Listele</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @*<li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p>
+                                        Simple Link
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                            </li>*@
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
@@ -319,6 +339,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/Areas/Admin/plugins/summernote/lang/summernote-tr-TR.js"></script>
     <!--Toastr-->
     <script src="~/Areas/Admin/plugins/toastr/toastr.min.js"></script>
+    <!-- Bootstrap Switch -->
+    <script src="~/Areas/Admin/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     @RenderSection("scripts", false)
 </body>
 </html>
