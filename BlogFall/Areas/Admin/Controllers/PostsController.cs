@@ -1,6 +1,7 @@
 ﻿using BlogFall.Areas.Admin.ViewModels;
 using BlogFall.Attributes;
 using BlogFall.Models;
+using BlogFall.Utility;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,8 @@ namespace BlogFall.Areas.Admin.Controllers
                 Id = x.Id,
                 CategoryId = x.CategoryId,
                 Content = x.Content,
-                Title = x.Title
+                Title = x.Title,
+                Slug = x.Slug
             }).FirstOrDefault(x => x.Id == id);
 
             return View(vm);
@@ -73,6 +75,7 @@ namespace BlogFall.Areas.Admin.Controllers
                 post.Content = model.Content;
                 post.CategoryId = model.CategoryId;
                 post.Title = model.Title;
+                post.Slug = model.Slug;
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -103,6 +106,7 @@ namespace BlogFall.Areas.Admin.Controllers
                     CategoryId = model.CategoryId,
                     AuthorId = User.Identity.GetUserId(),
                     CreationTime = DateTime.Now,
+                    Slug = model.Slug
                 };
 
                 db.Posts.Add(post);
@@ -130,6 +134,12 @@ namespace BlogFall.Areas.Admin.Controllers
             file.SaveAs(saveFilePath);
 
             return Json(new { url = Url.Content("~/Upload/Posts/" + saveFileName) });
+        }
+
+        [HttpPost]
+        public ActionResult GenerateSlug(string title)
+        {
+            return Json(UrlService.URLFriendly(title));
         }
     }
 }

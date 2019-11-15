@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title >XLarge - @ViewBag.Title </title>
+    <title>XLarge - @ViewBag.Title </title>
 
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
@@ -33,7 +33,7 @@
 
         <div class="nav-scroller py-1 mb-2">
             <nav class="nav">
-                <a class="p-2 text-muted" href="@Url.Action("Index","Home")">Anasayfa</a>
+                <a class="p-2 text-muted" href="@Url.RouteUrl("ActionOnly", new { controller ="Home", action="Index"})">Anasayfa</a>
                 <a class="p-2 text-muted" href="@Url.Action("About","Home")">Hakkında</a>
                 <a class="p-2 text-muted" href="@Url.Action("Contact","Home")">İletişim</a>
 

@@ -11,7 +11,7 @@ namespace BlogFall.Controllers
 {
     public class HomeController : BaseController
     {
-        public ActionResult Index(int? cid, int page = 1)
+        public ActionResult Index(int? cid, string slug, int page = 1)
         {
             int pageSize = 5;
 
@@ -28,7 +28,11 @@ namespace BlogFall.Controllers
                 {
                     return HttpNotFound();
                 }
-
+                //Kategorinin slug'ını yanlış girdiyse
+                if (cat.Slug != slug)
+                {
+                    return RedirectToRoute("CategoryRoute", new { cid = cid, slug = cat.Slug, page = page }); //page = page => sadece page olarak kullanılabilir.
+                }
                 ViewBag.SubTitle = cat.CategoryName;
                 result = result.Where(x => x.CategoryId == cid);
             }
@@ -66,13 +70,19 @@ namespace BlogFall.Controllers
             return PartialView("_CategoriesPartial", db.Categories.ToList());
         }
 
-        public ActionResult ShowPost(int id)
+        public ActionResult ShowPost(int id, string slug)
         {
             Post post = db.Posts.Find(id);
 
             if (post == null)
             {
                 return HttpNotFound();
+            }
+
+            //eğer adresteki slug veri tabanı ile aynı değilse
+            if (post.Slug != slug)
+            {
+                return RedirectToRoute("PostRoute", new { id = id, slug = post.Slug });
             }
 
             return View(post);

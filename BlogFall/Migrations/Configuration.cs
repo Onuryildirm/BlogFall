@@ -1,6 +1,7 @@
 namespace BlogFall.Migrations
 {
     using BlogFall.Models;
+    using BlogFall.Utility;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using System;
@@ -19,14 +20,15 @@ namespace BlogFall.Migrations
         protected override void Seed(BlogFall.Models.ApplicationDbContext context)
         {
 
+            var autoGenerateSlugs = false;
+            var autoGenerateSlugsAll = false;
+
             //tüm kullanýcýlarý aktif yapar.
             //foreach (var item in context.Users)
             //{
             //    item.IsEnabled = true;
             //}
-
             //return;
-
             #region Admin Rolünü ve Kullanýcýsýný Oluþtur
 
             if (!context.Roles.Any(r => r.Name == "Admin"))
@@ -116,7 +118,6 @@ namespace BlogFall.Migrations
                 #endregion
             }
             #endregion
-
             #region Admin kullanýcýsýna 77 yeni yazý ekle
 
             if (!context.Categories.Any(x => x.CategoryName == "Diðer"))
@@ -153,6 +154,25 @@ namespace BlogFall.Migrations
 
             #endregion
 
+            #region Mevcut kategori ve yazýlarýn Slug'larýný oluþtur
+            if (autoGenerateSlugs)
+            {
+                foreach (var item in context.Categories)
+                {
+                    if (autoGenerateSlugsAll || string.IsNullOrEmpty(item.Slug))
+                    {
+                        item.Slug = UrlService.URLFriendly(item.CategoryName);
+                    }
+                }
+                foreach (var item in context.Posts)
+                {
+                    if (autoGenerateSlugsAll || string.IsNullOrEmpty(item.Slug))
+                    {
+                        item.Slug = UrlService.URLFriendly(item.Title);
+                    }
+                }
+            }
+            #endregion
         }
     }
 }

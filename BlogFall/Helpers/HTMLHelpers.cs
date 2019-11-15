@@ -1,5 +1,7 @@
 ﻿using BlogFall.Areas.Admin.Controllers;
 using BlogFall.Attributes;
+using BlogFall.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +62,10 @@ namespace BlogFall.Helpers
 
         public static IHtmlString ShowPostIntro(this HtmlHelper htmlHelper, string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return htmlHelper.Raw("");
+            }
             //pos = position
             int pos = content.IndexOf("<hr>");
             if (pos == -1)
@@ -72,6 +78,10 @@ namespace BlogFall.Helpers
 
         public static IHtmlString ShowPost(this HtmlHelper htmlHelper, string content)
         {
+            if (string.IsNullOrEmpty(content))
+            {
+                return htmlHelper.Raw("");
+            }
             //pos = position
             int pos = content.IndexOf("<hr>");
             if (pos == -1)
@@ -80,6 +90,30 @@ namespace BlogFall.Helpers
             }
 
             return htmlHelper.Raw(content.Remove(pos, 4));
+        }
+
+        public static string ProfilePhotoPath(this HtmlHelper htmlHelper)
+        {
+            string userId = htmlHelper.ViewContext.HttpContext.User.Identity.GetUserId();
+
+            UrlHelper urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext, htmlHelper.RouteCollection);
+
+
+            //Giriş yapan kullanıcı varsa
+            if (userId != null)
+            {
+                using (var db = new ApplicationDbContext())
+                {
+                    var user = db.Users.Find(userId);
+                    //fotoğrafı varsa
+                    if (user != null && !string.IsNullOrEmpty(user.Photo))
+                    {
+                        return urlHelper.Content("~/Upload/Profiles/" + user.Photo);
+                    }
+                }
+            }
+            //diğer tüm durumlar
+            return urlHelper.Content("~/Images/avatar.jpg");
         }
     }
 }
