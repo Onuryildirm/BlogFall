@@ -49,15 +49,20 @@ namespace BlogFall.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
+
+            //Her yorumun zorunlu olarak bir yazısı vardır ve o yazınında yorumları vardır.
+            //Yazı silindiğinde otomatik olarak yorumlarıda sil.
+            modelBuilder.Entity<Comment>()
+                .HasRequired(x => x.Post)
+                .WithMany(x => x.Comments)
+                .WillCascadeOnDelete();
         }
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
-
         public DbSet<Comment> Comments { get; set; }
     }
 }
